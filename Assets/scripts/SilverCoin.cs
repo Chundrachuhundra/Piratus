@@ -15,4 +15,12 @@ public class SilverCoin : MonoBehaviour
     {
         
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            SilverText.Coin += 1;
+            Destroy(gameObject);
+        }
+    }
 }

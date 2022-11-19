@@ -40,11 +40,11 @@ public class playerController : MonoBehaviour
         }
         if (isGrounded == false)
         {
-            animator.SetBool("Jump", true);
+            animator.SetBool("jump", true);
         }
 
         {
-            animator.SetBool("Jump", false);
+            animator.SetBool("jump", false);
         }
 
     }
@@ -73,6 +73,21 @@ public class playerController : MonoBehaviour
         else
         {
             isGrounded = false;
+        
+        } 
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Equals("platform"))
+        {
+            this.transform.parent = collision.transform;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.name.Equals("platform"))
+        {
+            this.transform.parent = null;
         }
     }
 }
