@@ -7,6 +7,9 @@ TagManager:
   - gold_coin
   - P
   - platform
+  - Bullet
+  - Enemy
+  - CheckPoint
   layers:
   - Default
   - TransparentFX

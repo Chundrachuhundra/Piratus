@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class playerController : MonoBehaviour
     [Header("Player Settings")]
     [Range(0, 15f)] public float speed = 1f;
     public float jumpForce = 8f;
-
+    /*float SX, SY;*/
+    private Vector3 respawn;    
+   
     [Space]
     [Header("Ground Check Settings")]
     public bool isGrounded = false;
@@ -20,6 +23,10 @@ public class playerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        /*SX = transform.position.x;
+        SY = transform.position.y;*/
+        respawn = transform.position;
     }
 
     void Update()
@@ -42,7 +49,7 @@ public class playerController : MonoBehaviour
         {
             animator.SetBool("jump", true);
         }
-
+        else
         {
             animator.SetBool("jump", false);
         }
@@ -58,10 +65,25 @@ public class playerController : MonoBehaviour
     private void Flip()
     {
         facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-
+        transform.Rotate(0f, 180f, 0f);
+     }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+/*            if (collision.gameObject.name == "DeadZone")
+            {
+                transform.position = new Vector3(SX,SY, transform.position.z);*/
+            if(collision.gameObject.name == "DeadZone")
+            {
+                transform.position = respawn;
+            }else if(collision.tag == "CheckPoint")
+            {
+                respawn = transform.position;
+            }
+        }
+        if (collision.gameObject.name == "Next")
+        {
+            SceneManager.LoadScene("level2");
+        }
     }
     private void CheckGround()
     {     
